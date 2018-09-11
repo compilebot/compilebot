@@ -1,0 +1,34 @@
+VERSION: 2
+
+services:
+  code_runner:
+    image: gopherpun/code_runner
+    networks: 
+      - compilebot
+    volumes:
+      - /var/run/docker.sock /var/run/docker.sock
+    env_file:
+      - ./.env
+    environment:
+      - DOCKER_API_VERSION=${DOCKER_API_VERSION}
+      - REDIS_HOST=redis
+      - RESPONSE_QUEUE=${RESPONSE_QUEUE}
+      - JOB_QUEUE=${JOB_QUEUE}
+  listener_discord:
+    image: gopherpun/listener_discord
+    networks:
+      - compilebot
+    env_file:
+      - ./.env
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - REDIS_HOST=redis
+      - RESPONSE_QUEUE=${RESPONSE_QUEUE}
+      - JOB_QUEUE=${JOB_QUEUE}
+  redis:
+    image: redis
+    networks:
+      -compilebot
+
+networks:
+  compilebot:
