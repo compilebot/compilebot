@@ -2,7 +2,7 @@ version: '2'
 
 services:
   code_runner:
-    image: gopherpun/code_runner
+    image: johnstonjacob/code_runner:latest
     depends_on:
       - redis
     networks: 
@@ -16,8 +16,8 @@ services:
       - REDIS_HOST=redis:6379
       - RESPONSE_QUEUE=${RESPONSE_QUEUE}
       - JOB_QUEUE=${JOB_QUEUE}
-  discord_listener:
-    image: gopherpun/discord_listener
+  listener_discord:
+    image: johnstonjacob/listener_discord:latest
     depends_on:
       - redis
     networks:
